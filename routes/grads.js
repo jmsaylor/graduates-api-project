@@ -9,12 +9,13 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log(req.body);
+  let grad = new Grad({
+    name: req.body.name,
+    gradDate: req.body.gradDate,
+    review: req.body.review
+  });
   try {
-    let grad = new Grad({
-      name: req.body.name,
-      gradDate: req.body.gradDate,
-      review: req.body.review
-    });
     await grad.save();
     res.send(grad);
   } catch (error) {

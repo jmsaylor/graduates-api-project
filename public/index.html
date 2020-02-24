@@ -6,13 +6,13 @@
     <title>Document</title>
   </head>
   <body>
-    <form action="api/grads" method="POST" id="form">
-      <input type="text" name="name" />
-      <input type="date" name="gradDate" />
+    <form onSubmit="addReview(event)" id="form">
+      <input type="text" id="name" />
+      <input type="date" id="gradDate" />
       <br />
-      <textarea form="form" name="review">Leave your review here...</textarea>
-      <input type="submit" />
+      <textarea form="form" id="review">Leave your review here...</textarea>
+      <button type="submit" name="action">Submit</button>
     </form>
-    <script></script>
+    <script src="script.js"></script>
   </body>
 </html>
