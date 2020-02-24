@@ -1,3 +1,19 @@
+let button = document.getElementById("showReviews");
+button.onclick = showReviews;
+
+function showReviews(e) {
+  console.log("hey");
+
+  let xhrGet = new window.XMLHttpRequest();
+  xhrGet.open("GET", "http://localhost:3000/api/grads");
+  xhrGet.onload = () => {
+    const parsedData = JSON.parse(xhrGet.responseText);
+    console.log(parsedData);
+    document.getElementById("reviews").innerHTML = xhrGet.responseText;
+  };
+  xhrGet.send();
+}
+
 function addReview(e) {
   e.preventDefault();
   console.log("Submit");
