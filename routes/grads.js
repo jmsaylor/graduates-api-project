@@ -23,7 +23,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/", async (req, res) => {});
+router.delete("/:id", async (req, res) => {
+  console.log(req.params.id);
+
+  try {
+    let deleted = await Grad.findByIdAndRemove(req.params.id);
+    res.send(deleted);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 router.patch("/", async (req, res) => {});
 
