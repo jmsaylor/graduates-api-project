@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Grad } = require("../models/grad");
+const { Grad } = require("../../models/grad");
 const mongoose = require("mongoose");
 
 router.get("/", async (req, res) => {
@@ -34,6 +34,13 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.patch("/", async (req, res) => {});
+router.patch("/:id", async (req, res) => {
+  console.log(req.body);
+  try {
+    await Grad.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = router;

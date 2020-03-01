@@ -22,24 +22,19 @@ function showReviews(e) {
         item.innerHTML += "<br>";
         item.innerHTML += parsedData[x].review;
 
-        //Then we make a button and attach it to the item
-        let button = document.createElement("button");
-        button.innerHTML = "delete";
-        item.appendChild(button);
-        //A click will trigger this function
-        item.addEventListener("click", e => {
+        let deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "delete";
+
+        deleteButton.addEventListener("click", e => {
           e.preventDefault();
-          //this is where we take the id of each item so we know which one to delete
+
           let id = parsedData[x]._id;
           console.log(id);
           try {
             let xhrDelete = new window.XMLHttpRequest();
             xhrDelete.open("DELETE", `http://localhost:3000/api/grads/${id}`);
             xhrDelete.onload = () => {
-              //this clears everything on the page
-              document.body.innerHTML = "";
-              //and then calls this again to reflect the deletion
-              showReviews(e);
+              location.reload();
             };
             xhrDelete.send();
           } catch (error) {
@@ -47,6 +42,36 @@ function showReviews(e) {
           }
         });
 
+        item.appendChild(deleteButton);
+
+        let editButton = document.createElement("button");
+        editButton.innerHTML = "edit";
+
+        editButton.addEventListener("click", e => {
+          e.preventDefault();
+
+          let grad = {
+            name: document.getElementById("name").value,
+            gradDate: document.getElementById("gradDate").value,
+            review: document.getElementById("review").value
+          };
+
+          let id = parsedData[x]._id;
+          console.log(id);
+          try {
+            let xhrEdit = new window.XMLHttpRequest();
+            xhrEdit.open("PATCH", `http://localhost:3000/api/grads/${id}`);
+            xhrEdit.setRequestHeader("Content-Type", "application/json");
+            // xhrEdit.onload = () => {
+            //   location.reload();
+            // };
+            xhrEdit.send(JSON.stringify(grad));
+            location.reload();
+          } catch (error) {
+            console.error(error);
+          }
+        });
+        item.appendChild(editButton);
         document.body.appendChild(item);
       }
     };
@@ -71,6 +96,9 @@ function addReview(e) {
     xhrPost.open("POST", "http://localhost:3000/api/grads");
     xhrPost.setRequestHeader("Content-Type", "application/json");
     xhrPost.send(JSON.stringify(grad));
+
+    //We should check to see if succesful before clearing the form
+    document.getElementById("form").reset();
   } catch (error) {
     console.error(error);
   }

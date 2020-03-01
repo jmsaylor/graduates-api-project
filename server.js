@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const grads = require("./routes/grads");
+const grads = require("./routes/api/grads");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 require("cors");
@@ -28,4 +28,8 @@ app.use("/api/grads", grads);
 
 const port = 3000;
 
-app.listen(port, () => console.log(`listening on ${port}`));
+try {
+  app.listen(port, () => console.log(`listening on ${port}`));
+} catch (error) {
+  console.error(error);
+}
